@@ -1,0 +1,5 @@
+# dot env
+.env
+.env.test
+node_modules
+.DS_Store
