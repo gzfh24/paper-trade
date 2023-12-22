@@ -12,12 +12,17 @@ mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
 })
 
+// require routers
+const apiRouter = require('./routes/api');
+
 
 app.get('/', (req, res) => {
     return res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 })
 
-app.use()
+// api router that routes to database
+
+app.use('/api', apiRouter)
 
 app.listen(process.env.SERVER_PORT, () => {
     console.log(`Listening on port ${process.env.SERVER_PORT}`)

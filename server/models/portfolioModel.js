@@ -4,15 +4,24 @@ const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
     itemName: String,
+    itemType: String,
+    quantity: Number,
+    currentPrice: Number
+})
+
+const transactionSchema = new Schema({
+    itemName: String,
+    itemType: String,
     quantity: Number,
     purchasePrice: Number,
-    currentPrice: Number,
     purchaseDate: Date
 })
+
 const portfolioSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     value: Number,
-    items: [itemSchema]
+    items: [itemSchema],
+    transactions: [transactionSchema]
 })
 
 
