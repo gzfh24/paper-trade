@@ -14,14 +14,14 @@ const transactionSchema = new Schema({
     itemType: String,
     quantity: Number,
     purchasePrice: Number,
-    purchaseDate: Date
+    purchaseDate: { type: Date, default: Date.now }
 })
 
 const portfolioSchema = new Schema({
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
-    value: Number,
-    items: [itemSchema],
-    transactions: [transactionSchema]
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
+    value: { type: Number, default: 10000 },
+    items: { type: [itemSchema], default: [] },
+    transactions: { type: [transactionSchema], default: [] }
 })
 
 
