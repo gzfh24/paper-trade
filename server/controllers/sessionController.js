@@ -22,17 +22,13 @@ sessionController.isLoggedIn = (req, res, next) => {
 
 sessionController.startSession = (req, res, next) => {
   //write code here
-  User.find({username: req.body.username})
-    .then((data) => {
-      Session.findOneAndUpdate({cookieId: data[0]._id}, {createdAt: Date.now()}, {upsert: true})
-        .then(() => {
-          return next()
-        })
+  Session.findOneAndUpdate({cookieId: res.locals.user._id}, {createdAt: Date.now()}, {upsert: true})
+    .then(() => {
+      return next();
     })
-    .catch(() => {
-      return next('Error occurred in sessionController.startSession')
+    .catch((err) => {
+      return next(err);
     })
-
 };
 
 module.exports = sessionController;

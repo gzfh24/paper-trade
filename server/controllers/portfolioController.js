@@ -1,7 +1,7 @@
 const Portfolio = require('../models/portfolioModel')
 const portfolioController = {};
 
-portfolioController.createPortfolio = (req, res) => {
+portfolioController.createPortfolio = (req, res, next) => {
     const userId = res.locals.userId
     Portfolio.create({ userId })
         .then(() => next())
@@ -10,10 +10,13 @@ portfolioController.createPortfolio = (req, res) => {
         })
 }
 
-portfolioController.getPortfolio = (req, res) => {
+portfolioController.getPortfolio = (req, res, next) => {
     const userId = res.locals.userId;
     Portfolio.find({userId})
-        .then((data) => res.locals.portfolio = data)
+        .then((data) => {
+            res.locals.portfolio = data;
+            return next();
+        })
 }
 
 module.exports = portfolioController;

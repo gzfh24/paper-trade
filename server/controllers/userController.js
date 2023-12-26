@@ -9,8 +9,9 @@ userController.createUser = (req, res, next) => {
     password: req.body.password
   };
   User.create(newUser)
-    .then(()=> {
-      return next()
+    .then((data)=> {
+      res.locals.user = data;
+      return next();
     })
     .catch((err) => {
       return next('Error in userController.createUser')
