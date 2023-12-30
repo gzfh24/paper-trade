@@ -24,14 +24,14 @@ userController.verifyUser = (req, res, next) => {
   User.find({username: username})
     .then((data) => {
       if (data[0] === undefined) {
-        return res.redirect('/signup');
+        throw new Error;
       }
       bcrypt.compare(password, data[0].password, function(err, result) {
         if (result) {
-          res.locals.login = data;
+          res.locals.user = data;
           return next();
         } else {
-          return res.redirect('/signup');
+          return next('error in userController.verifyUser: username or password did not match')
         }
       })
     })

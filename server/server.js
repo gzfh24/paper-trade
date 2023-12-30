@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 require('dotenv').config()
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 const app = express();
 // app.use(express.static(path.join(__dirname, '../build')))
@@ -20,6 +21,9 @@ const apiRouter = require('./routes/api');
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:8080'
+}));
 
 // app.get('/', (req, res) => {
 //     return res.sendFile(path.resolve(__dirname, '../build/index.html'));
