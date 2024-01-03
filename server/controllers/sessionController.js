@@ -4,6 +4,7 @@ const User = require('../models/userModel');
 const sessionController = {};
 
 sessionController.isLoggedIn = (req, res, next) => {
+  console.log(req.cookies.ssid);
   Session.find({cookieId: req.cookies.ssid})
     .then(data => {
       if (data[0] !== undefined) {
@@ -22,8 +23,9 @@ sessionController.isLoggedIn = (req, res, next) => {
 
 sessionController.startSession = (req, res, next) => {
   //write code here
-  Session.findOneAndUpdate({cookieId: res.locals.user._id}, {createdAt: Date.now()}, {upsert: true})
+  Session.findOneAndUpdate({cookieId: res.locals.user._id.toString()}, {createdAt: Date.now()}, {upsert: true})
     .then(() => {
+      console.log('startSession: session started', res.locals.user._id.toString())
       return next();
     })
     .catch((err) => {

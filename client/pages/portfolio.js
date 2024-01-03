@@ -7,8 +7,19 @@ import { loadAssets, setCurrentAsset, buyAsset } from "../slices/assetsSlice";
 // useEffect to dispatch loadAssets on mount
 function Portfolio() {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(loadAssets());
+    useEffect(async () => {
+        const response = await fetch('http://localhost:3000/api/portfolio', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        const data = await response.json();
+        console.log(data);
+        // data is in form [ARRAY]
+        // for (const asset of data) {
+        //   state.totalAssets++;
+        //   // make a fetch request for each asset to get current price and sum up the value
+        // }
+        // dispatch(loadAssets(data));
     }, []);
     const [quote, setQuote] = useState({});
 
@@ -33,9 +44,9 @@ function Portfolio() {
             console.log('Lookup failed');
         }
     }
+    const currentAsset = useSelector((state) => state.assets.currentAsset)
     async function handleBuy(event) {
         event.preventDefault();
-        const asset = useSelector((state) => state.assets.currentAsset)
         const quantity = event.target.quantity.value;
         try {
             const response = await fetch('http://localhost:3000/api/buy', {
@@ -43,9 +54,10 @@ function Portfolio() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({asset, quantity})
+                body: JSON.stringify({asset: currentAsset, quantity})
             })
             const data = await response.json();
+            console.log(data);
             dispatch(buyAsset(data));
         } catch {
             console.log('Buy asset failed')

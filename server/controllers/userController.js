@@ -11,6 +11,7 @@ userController.createUser = (req, res, next) => {
   User.create(newUser)
     .then((data)=> {
       res.locals.user = data;
+      console.log('user data:', data);
       return next();
     })
     .catch((err) => {
@@ -19,7 +20,7 @@ userController.createUser = (req, res, next) => {
 };
 
 userController.verifyUser = (req, res, next) => {
-  const { username, password} = req.body;
+  const { username, password } = req.body;
 
   User.find({username: username})
     .then((data) => {
@@ -28,7 +29,7 @@ userController.verifyUser = (req, res, next) => {
       }
       bcrypt.compare(password, data[0].password, function(err, result) {
         if (result) {
-          res.locals.user = data;
+          res.locals.user = data[0];
           return next();
         } else {
           return next('error in userController.verifyUser: username or password did not match')

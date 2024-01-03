@@ -24,7 +24,10 @@ assetController.buyAsset = async(req, res, next) => {
     const quote = res.locals.quote;
     try {
         const portfolio = await Portfolio.findOne({userId});
-        if (!portfolio) throw new Error();
+        if (!portfolio) {
+            console.log('Portfolio not found')
+            throw new Error()
+        };
         const newAsset = {
             assetName: quote.shortName,
             assetType: quote.quoteType,
@@ -41,6 +44,7 @@ assetController.buyAsset = async(req, res, next) => {
             purchasePrice: quote.regularMarketPrice,
             totalPrice: quote.regularMarketPrice * req.body.quantity
         }
+        portfolio.cash -= newTransaction.totalPrice;
         portfolio.assets.push(newAsset);
         portfolio.transactions.push(newTransaction);
         await portfolio.save();

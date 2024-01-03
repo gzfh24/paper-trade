@@ -2,7 +2,8 @@ const Portfolio = require('../models/portfolioModel')
 const portfolioController = {};
 
 portfolioController.createPortfolio = (req, res, next) => {
-    const userId = res.locals.userId
+    const userId = res.locals.user._id;
+    console.log(userId)
     Portfolio.create({ userId })
         .then(() => next())
         .catch((err) => {

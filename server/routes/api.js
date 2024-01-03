@@ -20,7 +20,7 @@ router.post('/login', userController.verifyUser, cookieController.setSSIDCookie,
     return res.status(200).json({value: true});
 });
 
-router.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+router.post('/signup', userController.createUser, portfolioController.createPortfolio, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
     return res.status(200).json({value: true});
 });
 

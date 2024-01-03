@@ -14,9 +14,10 @@ export const assetsSlice = createSlice({
   reducers: {
 
     buyAsset: async (state, action) => {
-      state.totalAssets++;
-      // iterate through action.payload (portfolio) to update portfolioValue
-      state.assetList.push(action.payload)
+      return;
+      // state.totalAssets++;
+      // // iterate through action.payload (portfolio) to update portfolioValue
+      // state.assetList.push(action.payload)
     },
     sellAsset: (state, action) => {
    
@@ -24,19 +25,8 @@ export const assetsSlice = createSlice({
     // syncAssets: (state, action) => {
 
     // },
-    loadAssets: async (state, action) => {
-      try {
-        const response = await fetch('http://localhost:3000/api/portfolio')
-        const data = await response.json();
-        console.log(data);
-        // data is in form [ARRAY]
-        // for (const asset of data) {
-        //   state.totalAssets++;
-        //   // make a fetch request for each asset to get current price and sum up the value
-        // }
-      } catch {
-          console.log('Load assets failed');
-      }
+    loadAssets: (state, action) => {
+      return;
     },
     setCurrentAsset: (state, action) => {
       state.currentAsset = action.payload;
