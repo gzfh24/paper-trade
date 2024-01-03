@@ -17,6 +17,9 @@ portfolioController.getPortfolio = (req, res, next) => {
             res.locals.portfolio = data;
             return next();
         })
+        .catch(() => {
+            return next('Error in portfolioController.getPortfolio');
+        })
 }
 
 module.exports = portfolioController;

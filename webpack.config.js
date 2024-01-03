@@ -35,7 +35,7 @@ module.exports = {
         path: path.resolve(__dirname, 'build')
     },
     plugins: [new HtmlWebpackPlugin({
-        title: 'Tic Tac Toe',
+        title: 'PaperTrade',
         filename: 'index.html',
         template: './index.html'
     })],

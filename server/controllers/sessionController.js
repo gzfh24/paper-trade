@@ -10,7 +10,7 @@ sessionController.isLoggedIn = (req, res, next) => {
         res.locals.userId = data[0]._id;
         return next()
       } else {
-        return res.status(400).redirect('/signup');
+        return res.status(400).json({value: false});
       }
     }
     )

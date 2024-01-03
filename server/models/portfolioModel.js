@@ -2,28 +2,29 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const itemSchema = new Schema({
-    itemName: String,
-    itemType: String,
-    quantity: Number,
-    currentPrice: Number
+const assetSchema = new Schema({
+    assetName: String,
+    assetType: String,
+    assetSymbol: String,
+    quantity: Number
+    // currentPrice: Number --- can just fetch when needed
 })
 
 const transactionSchema = new Schema({
-    itemName: String,
-    itemType: String,
+    assetName: String,
+    assetType: String,
+    assetSymbol: String,
     quantity: Number,
+    transactionType: String,
     purchasePrice: Number,
     purchaseDate: { type: Date, default: Date.now }
 })
 
 const portfolioSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
-    value: { type: Number, default: 10000 },
-    items: { type: [itemSchema], default: [] },
+    cash: { type: Number, default: 10000 },
+    assets: { type: [assetSchema], default: [] },
     transactions: { type: [transactionSchema], default: [] }
 })
-
-
 
 module.exports = mongoose.model('Portfolio', portfolioSchema)

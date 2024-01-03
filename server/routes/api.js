@@ -24,8 +24,12 @@ router.post('/signup', userController.createUser, cookieController.setSSIDCookie
     return res.status(200).json({value: true});
 });
 
-router.get('/portfolio', sessionController.isLoggedIn, (req, res) => {
-    return res.status(200).sendFile();
+router.get('/portfolio', sessionController.isLoggedIn, portfolioController.getPortfolio, (req, res) => {
+    return res.status(200).json(res.locals.portfolio);
+})
+
+router.post('/buy', sessionController.isLoggedIn, assetController.lookupStock, assetController.buyAsset, (req, res) => {
+    return res.status(200).json(res.locals.portfolio);
 })
 
 module.exports = router;

@@ -25,12 +25,6 @@ app.use(cors({
     origin: 'http://localhost:8080'
 }));
 
-// app.get('/', (req, res) => {
-//     return res.sendFile(path.resolve(__dirname, '../build/index.html'));
-// })
-
-// api router that routes to database
-
 app.use('/api', apiRouter);
 
 // 404 handler

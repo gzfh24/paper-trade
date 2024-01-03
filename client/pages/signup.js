@@ -8,7 +8,7 @@ function Signup() {
         const username = event.target.username.value;
         const password = event.target.password.value;
         try {
-            const response = await fetch(`http://localhost:3000/api/signup`, {
+            const response = await fetch('http://localhost:3000/api/signup', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
