@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAssets, setCurrentAsset, buyAsset } from "../slices/assetsSlice";
 import PortfolioDisplay from "../components/PortfolioDisplay"
+import Dashboard from "../components/Dashboard"
 
 // useEffect to dispatch loadAssets on mount
 function Portfolio() {
@@ -93,6 +94,7 @@ function Portfolio() {
 
     return (
         <>
+            <Dashboard/>
             <form onSubmit={handleLookup}>
                 <input name="asset" type="text" placeholder="AAPL, GOOG, ..."></input>
                 <input type="submit" value="Lookup"></input>

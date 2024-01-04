@@ -22,6 +22,7 @@ assetController.lookupStock = async (req, res, next) => {
 assetController.buyAsset = async(req, res, next) => {
     const userId = res.locals.userId;
     const quote = res.locals.quote;
+    const quantity = Number(req.body.quantity)
     try {
         const portfolio = await Portfolio.findOne({userId});
         
@@ -29,34 +30,47 @@ assetController.buyAsset = async(req, res, next) => {
             console.log('Portfolio not found')
             throw new Error();
         };
-        if (portfolio.cash - quote.regularMarketPrice * req.body.quantity < 0) {
+        if (portfolio.cash - quote.regularMarketPrice * quantity < 0) {
             return res.status(400).json({value: false})
         }
-        const newAsset = {
-            assetName: quote.shortName,
-            assetType: quote.quoteType,
-            assetSymbol: quote.symbol,
-            quantity: req.body.quantity,
-            // currentPrice: quote.regularMarketPrice
+        let asset;
+        for (const element of portfolio.assets) {
+            if (element.assetSymbol === quote.symbol) {
+                asset = element;
+                break;
+            }
+        }
+        if (asset) {
+            asset.quantity += quantity;
+            console.log(asset.quantity)
+        } else {
+            const newAsset = {
+                assetName: quote.shortName,
+                assetType: quote.quoteType,
+                assetSymbol: quote.symbol,
+                quantity,
+                // currentPrice: quote.regularMarketPrice
+            }
+            portfolio.assets.push(newAsset)
         }
         const newTransaction = {
             assetName: quote.shortName,
             assetType: quote.quoteType,
             assetSymbol: quote.symbol,
-            quantity: req.body.quantity,
+            quantity,
             transactionType: 'BUY',
             purchasePrice: quote.regularMarketPrice,
-            totalPrice: quote.regularMarketPrice * req.body.quantity
+            totalPrice: quote.regularMarketPrice * quantity
         }
         portfolio.cash -= newTransaction.totalPrice;
-        portfolio.assets.push(newAsset);
         portfolio.transactions.push(newTransaction);
         await portfolio.save();
         console.log(portfolio)
         res.locals.portfolio = portfolio;
         return next();
-    } catch {
-        return next('Error in assetController.buyAsset')
+    } catch(error) {
+        console.error(error);
+        return next('Error in assetController.buyAsset');
     }
 }
 
@@ -64,6 +78,7 @@ assetController.sellAsset = async(req, res, next) => {
     const userId = res.locals.userId;
     const quote = res.locals.quote;
     const assetId = req.body.assetId;
+    const quantity = Number(req.body.quantity);
     console.log(assetId);
     try {
         const portfolio = await Portfolio.findOne({userId});
@@ -84,11 +99,11 @@ assetController.sellAsset = async(req, res, next) => {
             console.log('Asset not found');
             throw new Error();
         }
-        if (asset.quantity < req.body.quantity) {
+        if (asset.quantity < quantity) {
             console.log('Not enough to sell')
             return res.status(400).json({value: false})
         }
-        asset.quantity -= req.body.quantity;
+        asset.quantity -= quantity;
         if (asset.quantity === 0) {
             portfolio.assets.splice(index, 1);
         };
@@ -96,15 +111,14 @@ assetController.sellAsset = async(req, res, next) => {
             assetName: quote.shortName,
             assetType: quote.quoteType,
             assetSymbol: quote.symbol,
-            quantity: req.body.quantity,
+            quantity,
             transactionType: 'SELL',
             purchasePrice: quote.regularMarketPrice,
-            totalPrice: quote.regularMarketPrice * req.body.quantity
+            totalPrice: quote.regularMarketPrice * quantity
         }
         portfolio.cash += newTransaction.totalPrice;
         portfolio.transactions.push(newTransaction);
         await portfolio.save();
-        console.log(portfolio)
         res.locals.portfolio = portfolio;
         return next();
     } catch {
