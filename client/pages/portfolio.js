@@ -2,10 +2,38 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAssets, setCurrentAsset, buyAsset } from "../slices/assetsSlice";
-
+import PortfolioDisplay from "../components/PortfolioDisplay"
 
 // useEffect to dispatch loadAssets on mount
 function Portfolio() {
+    async function updatePortfolio(portfolio) {
+        let portfolioValue = portfolio.cash;
+        for (const curr of portfolio.assets) {
+            try {
+                const response = await fetch('http://localhost:3000/api/lookup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({asset: curr.assetSymbol})
+                });
+                const priceData = await response.json();
+                const price = priceData.regularMarketPrice;
+                curr.price = price;
+                portfolioValue += (curr.quantity * price);
+            } catch {
+                console.log('error fetching data for', curr.assetName);
+            }
+        }
+        const newState = {
+            totalAssets: portfolio.assets.length,
+            portfolioValue,
+            cashValue: portfolio.cash,
+            assetList: portfolio.assets,
+        }
+        return newState
+    }
+
     const dispatch = useDispatch();
     useEffect(async () => {
         const response = await fetch('http://localhost:3000/api/portfolio', {
@@ -13,14 +41,11 @@ function Portfolio() {
             credentials: 'include'
         })
         const data = await response.json();
-        console.log(data);
-        // data is in form [ARRAY]
-        // for (const asset of data) {
-        //   state.totalAssets++;
-        //   // make a fetch request for each asset to get current price and sum up the value
-        // }
-        // dispatch(loadAssets(data));
+        const newState = await updatePortfolio(data);
+        console.log(newState);
+        dispatch(loadAssets(newState));
     }, []);
+
     const [quote, setQuote] = useState({});
 
     async function handleLookup(event) {
@@ -54,11 +79,13 @@ function Portfolio() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({asset: currentAsset, quantity})
             })
             const data = await response.json();
-            console.log(data);
-            dispatch(buyAsset(data));
+            const newState = await updatePortfolio(data);
+            console.log(newState);
+            dispatch(loadAssets(newState));
         } catch {
             console.log('Buy asset failed')
         }
@@ -75,12 +102,13 @@ function Portfolio() {
                 <div>
                     <span>{`Price: ${quote.price} ${quote.currency}`}</span>
                     <form onSubmit={handleBuy}>
-                        <input name="quantity" type="text" ></input>
+                        <input name="quantity" type="text" placeholder="Quantity"></input>
                         <input type="submit" value="Buy"></input>
                     </form>
                 </div>
             )}
             </div>
+            <PortfolioDisplay updatePortfolio={updatePortfolio}/>
         </>
 
     )

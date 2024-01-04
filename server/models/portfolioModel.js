@@ -17,6 +17,7 @@ const transactionSchema = new Schema({
     quantity: Number,
     transactionType: String,
     purchasePrice: Number,
+    totalPrice: Number,
     purchaseDate: { type: Date, default: Date.now }
 })
 

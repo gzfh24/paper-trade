@@ -13,7 +13,8 @@ portfolioController.createPortfolio = (req, res, next) => {
 
 portfolioController.getPortfolio = (req, res, next) => {
     const userId = res.locals.userId;
-    Portfolio.find({userId})
+    console.log(userId);
+    Portfolio.findOne({userId})
         .then((data) => {
             res.locals.portfolio = data;
             return next();

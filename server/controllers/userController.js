@@ -11,7 +11,6 @@ userController.createUser = (req, res, next) => {
   User.create(newUser)
     .then((data)=> {
       res.locals.user = data;
-      console.log('user data:', data);
       return next();
     })
     .catch((err) => {

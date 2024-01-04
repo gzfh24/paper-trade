@@ -32,4 +32,8 @@ router.post('/buy', sessionController.isLoggedIn, assetController.lookupStock, a
     return res.status(200).json(res.locals.portfolio);
 })
 
+router.post('/sell', sessionController.isLoggedIn, assetController.lookupStock, assetController.sellAsset, (req, res) => {
+    return res.status(200).json(res.locals.portfolio);
+})
+
 module.exports = router;

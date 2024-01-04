@@ -13,20 +13,23 @@ export const assetsSlice = createSlice({
   initialState,
   reducers: {
 
-    buyAsset: async (state, action) => {
-      return;
-      // state.totalAssets++;
-      // // iterate through action.payload (portfolio) to update portfolioValue
-      // state.assetList.push(action.payload)
-    },
-    sellAsset: (state, action) => {
-   
-    },
-    // syncAssets: (state, action) => {
-
+    // buyAsset: async (state, action) => {
+    //   return;
+    //   // state.totalAssets++;
+    //   // // iterate through action.payload (portfolio) to update portfolioValue
+    //   // state.assetList.push(action.payload)
     // },
+    // sellAsset: (state, action) => {
+   
+    // },
+    // // syncAssets: (state, action) => {
+
+    // // },
     loadAssets: (state, action) => {
-      return;
+      state.totalAssets = action.payload.totalAssets;
+      state.portfolioValue = action.payload.portfolioValue;
+      state.cashValue = action.payload.cashValue;
+      state.assetList = action.payload.assetList;
     },
     setCurrentAsset: (state, action) => {
       state.currentAsset = action.payload;
