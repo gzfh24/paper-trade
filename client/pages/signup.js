@@ -28,11 +28,16 @@ function Signup() {
         }
     }
     return (
-        <form onSubmit={handleSignup}>
-            <input name="username" type="text" placeholder="username"></input>
-            <input name="password" type="password"></input>
-            <input type="submit" value="create user"></input>
-        </form>
+        <div class="columnContainer">
+            <div>
+                <h1>PaperTrade</h1>
+            </div>
+            <form class="formContainer" onSubmit={handleSignup}>
+                <input name="username" type="text" placeholder="Username"></input>
+                <input name="password" type="password" placeholder="Password"></input>
+                <input type="submit" value="Signup" class="primaryButton"></input>
+            </form>
+        </div>
     )
 }
 

@@ -5,9 +5,9 @@ const Dashboard = props => {
     const portfolioValue = useSelector((state) => state.assets.portfolioValue);
     const cashValue = useSelector((state) => state.assets.cashValue);
     return (
-        <div>
-            <h4>Portfolio Value: {portfolioValue.toFixed(2)}</h4>
-            <h4>Cash Value: {cashValue.toFixed(2)}</h4>
+        <div class="formContainer">
+            <span class="money">Portfolio Value: ${portfolioValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span class="money">Cash Value: ${cashValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         </div>
     )
 }

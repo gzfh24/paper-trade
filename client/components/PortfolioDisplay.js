@@ -7,7 +7,7 @@ const PortfolioDisplay = props => {
     const assetListMapped = assetList.map((items, index) => <Asset items = {items} key = {index} updatePortfolio = {props.updatePortfolio}/>)
     return (
         <div>
-            <h4>Assets</h4>
+            <h4>My Assets</h4>
             {assetListMapped}
         </div>
     )

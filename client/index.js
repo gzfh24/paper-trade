@@ -3,8 +3,7 @@ import App from './App';
 import store from './store'
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
-// uncomment so that webpack can bundle styles
-// import styles from './scss/application.scss';
+import styles from './stylesheets/styles.scss'
 
 render(
   <Provider store={store}>

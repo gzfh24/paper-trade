@@ -21,6 +21,7 @@ function Portfolio() {
                 const priceData = await response.json();
                 const price = priceData.regularMarketPrice;
                 curr.price = price;
+                curr.priceChange = priceData.regularMarketChangePercent;
                 portfolioValue += (curr.quantity * price);
             } catch {
                 console.log('error fetching data for', curr.assetName);
@@ -84,6 +85,9 @@ function Portfolio() {
                 body: JSON.stringify({asset: currentAsset, quantity})
             })
             const data = await response.json();
+            if (data.value === false) {
+                alert('Insufficient Funds')
+            }
             const newState = await updatePortfolio(data);
             console.log(newState);
             dispatch(loadAssets(newState));
@@ -94,10 +98,11 @@ function Portfolio() {
 
     return (
         <>
+            <h2>PaperTrade</h2>
             <Dashboard/>
             <form onSubmit={handleLookup}>
                 <input name="asset" type="text" placeholder="AAPL, GOOG, ..."></input>
-                <input type="submit" value="Lookup"></input>
+                <input type="submit" value="Lookup" class="primaryButton"></input>
             </form>
             <div>
             {quote.price !== undefined && (
@@ -105,7 +110,7 @@ function Portfolio() {
                     <span>{`Price: ${quote.price} ${quote.currency}`}</span>
                     <form onSubmit={handleBuy}>
                         <input name="quantity" type="text" placeholder="Quantity"></input>
-                        <input type="submit" value="Buy"></input>
+                        <input type="submit" value="Buy" class="primaryButton"></input>
                     </form>
                 </div>
             )}

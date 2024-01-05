@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700&display=swap');
+
+$primary:#D0D1D3;
+$secondary:#21CE99;
+$white:#FFFFFF;
+$darkerPrimary:#898D90;
+$dark:#040D14;
+
+
+.moreInfoArrow {
+    position: relative;
+    background-color: $white;
+    color: $dark;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      border: solid $dark;
+      border-width: 0 2px 2px 0;
+      padding: 5px;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+}
+
+* {
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Montserrat';
+    font-weight:400;
+    font-size: 3vmin;
+}
+.bold {
+    font-weight:700;
+}
+
+h1 {
+    font-size:3.5rem;
+    color:$dark;
+}
+h2 {
+    font-size:2rem;
+    color:$dark;
+}
+
+.money {
+    font-size:1.5rem;
+    color:$dark;
+    font-weight:200;
+}
+
+.positive {
+    color:$secondary;
+}
+
+.negative {
+    color:#f24930;
+}
+
+
+.columnContainer {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    div {
+        margin: 1vh;
+        display:flex;
+        width:auto;
+        justify-content:space-between;
+    }
+}
+
+.formContainer {
+    display:flex;
+    flex-direction:column;
+}
+
+.assetContainer {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width: 50%;
+}
+
+.primaryButton {
+    margin-right:10px;
+    margin-left:10px;
+    background-color: $secondary;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  
+    &:hover, &:focus {
+      background-color: #17a77e;
+      transform: scale(1.05);
+      outline: none;
+    }
+}
+
+.secondaryButton {
+    margin-right:10px;
+    margin-left:10px;
+    background-color: $white;
+    color: $secondary;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  
+    &:hover, &:focus {
+      transform: scale(1.05);
+      outline: none;
+    }
+}
+

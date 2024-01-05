@@ -27,11 +27,16 @@ function Login() {
         }
     }
     return (
-        <form onSubmit={handleLogin}>
-            <input name="username" type="text" placeholder="username"></input>
-            <input name="password" type="password"></input>
-            <input type="submit" value="login"></input>
-        </form>
+        <div class="columnContainer">
+            <div>
+                <h1>PaperTrade</h1>
+            </div>
+            <form class="formContainer" onSubmit={handleLogin}>
+                <input name="username" type="text" placeholder="Username"></input>
+                <input name="password" type="password" placeholder="Password"></input>
+                <input type="submit" value="Login" class="primaryButton"></input>
+            </form>
+        </div>
     )
 }
 

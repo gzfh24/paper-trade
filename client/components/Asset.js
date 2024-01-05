@@ -1,8 +1,13 @@
 import React from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loadAssets } from "../slices/assetsSlice";
 
 const App = props => {
+  const [moreInfo, setMoreInfo] = useState(false)
+  const handleDropDown = () => {
+    moreInfo ? setMoreInfo(false) : setMoreInfo(true);
+  }
   const dispatch = useDispatch();
   const handleSell = async (event) => {
     event.preventDefault();
@@ -17,6 +22,9 @@ const App = props => {
             body: JSON.stringify({asset:props.items.assetSymbol, assetId: props.items._id.toString(), quantity})
         })
         const data = await response.json();
+        if (data.value === false) {
+          alert('Maximum quantity exceeded')
+        }
         const newState = await props.updatePortfolio(data);
         console.log(newState);
         dispatch(loadAssets(newState));
@@ -25,19 +33,29 @@ const App = props => {
     }
   }
     return (
+      <>
+        <div class="assetContainer">
+            <span class="bold">{props.items.assetSymbol}</span>
+            <span class={props.items.priceChange >= 0 ? "positive" : "negative"}>{props.items.priceChange.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
+            <span>${props.items.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <button class="moreInfoArrow" onClick={handleDropDown}></button>
+        </div>
         <div>
-          <ul style={{listStyle:'none'}}>
-            <li><b>Name:</b> {props.items.assetName}</li>
-            <li><b>Type:</b> {props.items.assetType}</li>
-            <li><b>Symbol:</b> {props.items.assetSymbol}</li>
-            <li><b>Quantity:</b> {props.items.quantity}</li>
-            <li><b>Price:</b> {props.items.price.toFixed(2)}</li>
-          </ul>
+          {moreInfo === true && (
+            <div>
+            <ul style={{listStyle:'none'}}>
+            <li>Name: {props.items.assetName}</li>
+            <li>Type: {props.items.assetType}</li>
+            <li>Quantity: {props.items.quantity}</li>
+            </ul>
           <form onSubmit={handleSell}>
             <input name="quantity" type="text" placeholder="Quantity" ></input>
             <input type="submit" value="Sell"></input>
           </form>
+            </div>
+          )}
         </div>
+      </>
       );
 }
 
