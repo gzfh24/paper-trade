@@ -28,14 +28,14 @@ function Signup() {
         }
     }
     return (
-        <div class="columnContainer">
+        <div className="columnContainer">
             <div>
                 <h1>PaperTrade</h1>
             </div>
-            <form class="formContainer" onSubmit={handleSignup}>
-                <input name="username" type="text" placeholder="Username"></input>
-                <input name="password" type="password" placeholder="Password"></input>
-                <input type="submit" value="Signup" class="primaryButton"></input>
+            <form className="formContainer" onSubmit={handleSignup}>
+                <input className = "loginInput" name="username" type="text" placeholder="Username"></input>
+                <input className = "loginInput" name="password" type="password" placeholder="Password"></input>
+                <input type="submit" value="Signup" className="primaryButton"></input>
             </form>
         </div>
     )

@@ -65,7 +65,8 @@ function Portfolio() {
             const data = await response.json();
             setQuote({
                 price: data.regularMarketPrice,
-                currency: data.currency
+                currency: data.currency,
+                name: data.shortName
             });
         } catch {
             console.log('Lookup failed');
@@ -97,26 +98,29 @@ function Portfolio() {
     }
 
     return (
-        <>
-            <h2>PaperTrade</h2>
-            <Dashboard/>
-            <form onSubmit={handleLookup}>
-                <input name="asset" type="text" placeholder="AAPL, GOOG, ..."></input>
-                <input type="submit" value="Lookup" class="primaryButton"></input>
-            </form>
-            <div>
-            {quote.price !== undefined && (
+        <div className="portfolioContainer">
+            <div className="container">
+                <h2>PaperTrade</h2>
+                <Dashboard/>
+                <form className="horizontalContainer"onSubmit={handleLookup}>
+                    <input className="lookupInput"name="asset" type="text" placeholder="AAPL, GOOG, ..."></input>
+                    <input type="submit" value="Lookup" className="primaryButton"></input>
+                </form>
                 <div>
-                    <span>{`Price: ${quote.price} ${quote.currency}`}</span>
-                    <form onSubmit={handleBuy}>
-                        <input name="quantity" type="text" placeholder="Quantity"></input>
-                        <input type="submit" value="Buy" class="primaryButton"></input>
-                    </form>
+                {quote.price !== undefined && (
+                    <div className="moreInfoContainer">
+                        <div><span>{`Name: ${quote.name}`}</span></div>
+                        <div><span>{`Price: ${quote.price} ${quote.currency}`}</span></div>
+                        <form className="horizontalContainer" onSubmit={handleBuy}>
+                            <input className="sellInput"name="quantity" type="text" placeholder="Quantity"></input>
+                            <input className="buyButton"type="submit" value="Buy" ></input>
+                        </form>
+                    </div>
+                )}
                 </div>
-            )}
+                <PortfolioDisplay updatePortfolio={updatePortfolio}/>
             </div>
-            <PortfolioDisplay updatePortfolio={updatePortfolio}/>
-        </>
+        </div>
 
     )
 }

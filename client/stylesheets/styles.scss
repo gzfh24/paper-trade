@@ -44,12 +44,21 @@ h1 {
     color:$dark;
 }
 h2 {
+    margin:5px;
     font-size:2rem;
     color:$dark;
 }
 
+.myAssets {
+    margin:5px;
+    margin-top:25px;
+    margin-bottom:15px;
+    font-size:1.25rem;
+}
+
+
 .money {
-    font-size:1.5rem;
+    font-size:1.25rem;
     color:$dark;
     font-weight:200;
 }
@@ -62,6 +71,10 @@ h2 {
     color:#f24930;
 }
 
+.horizontalContainer {
+    display:flex;
+    width:100%;
+}
 
 .columnContainer {
     display:flex;
@@ -83,15 +96,99 @@ h2 {
 }
 
 .assetContainer {
+    margin:5px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    width: 50%;
+    width: 100%;
+    div {
+        width: 25%;
+    }
+}
+
+.dashboardContainer {
+    display:flex;
+    flex-direction: column;
+    div {
+        margin: 5px;
+    }
+}
+
+.portfolioContainer {
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    margin: 3%;
+    .container {
+        width:80%
+    }
+}
+
+.moreInfoContainer {
+    display:flex;
+    flex-direction:column;
+    margin:5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    ul {
+        li {
+            margin-top:2px;
+            margin-bottom:2px;
+        }
+    }
+    div {
+        margin-top:2px;
+        margin-bottom:2px;
+    }
+}
+
+.lookupInput {
+    width:65%;
+    margin:5px;
+    margin-right:10px;
+	border: none;
+	border-bottom: 2px solid #D1D1D4;
+	background: none;
+	font-weight: 400;
+	transition: .2s;
+    &:hover, &:focus, &:active {
+        outline: none;
+        border-bottom-color:$secondary;
+      }
+}
+
+.loginInput {
+    margin:10px;
+	border: none;
+	border-bottom: 2px solid #D1D1D4;
+	background: none;
+	padding: 10px;
+	font-weight: 400;
+	transition: .2s;
+    &:hover, &:focus, &:active {
+        outline: none;
+        border-bottom-color:$secondary;
+      }
+}
+
+.sellInput {
+    margin-right:30px;
+    width:40%;
+    height:50px;
+	border: none;
+	border-bottom: 2px solid #D1D1D4;
+	background: none;
+	font-weight: 400;
+	transition: .2s;
+    &:hover, &:focus, &:active {
+        outline: none;
+        border-bottom-color:$secondary;
+      }
 }
 
 .primaryButton {
-    margin-right:10px;
-    margin-left:10px;
+    width: 1fr;
+    margin:10px;
     background-color: $secondary;
     color: white;
     border: none;
@@ -109,8 +206,8 @@ h2 {
 }
 
 .secondaryButton {
-    margin-right:10px;
-    margin-left:10px;
+    width:1fr;
+    margin:10px;
     background-color: $white;
     color: $secondary;
     border: none;
@@ -121,6 +218,40 @@ h2 {
     transition: background-color 0.3s, transform 0.3s;
   
     &:hover, &:focus {
+      transform: scale(1.05);
+      outline: none;
+    }
+}
+
+.sellButton {
+    width:1fr;
+    background-color: $white;
+    color: $secondary;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    &:hover, &:focus {
+      transform: scale(1.05);
+      outline: none;
+    }
+}
+
+.buyButton {
+    width: 1fr;
+    margin:8px;
+    background-color: $secondary;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  
+    &:hover, &:focus {
+      background-color: #17a77e;
       transform: scale(1.05);
       outline: none;
     }

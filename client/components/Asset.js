@@ -33,29 +33,29 @@ const App = props => {
     }
   }
     return (
-      <>
-        <div class="assetContainer">
-            <span class="bold">{props.items.assetSymbol}</span>
-            <span class={props.items.priceChange >= 0 ? "positive" : "negative"}>{props.items.priceChange.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
-            <span>${props.items.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-            <button class="moreInfoArrow" onClick={handleDropDown}></button>
+      <div>
+        <div className="assetContainer">
+          <div><span className="bold">{props.items.assetSymbol}</span></div>
+          <div><span className={props.items.priceChange >= 0 ? "positive" : "negative"}>{props.items.priceChange.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span></div>
+          <div><span>${props.items.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+          <div><button className="moreInfoArrow" onClick={handleDropDown}></button></div>
         </div>
         <div>
           {moreInfo === true && (
-            <div>
+            <div className="moreInfoContainer">
             <ul style={{listStyle:'none'}}>
             <li>Name: {props.items.assetName}</li>
             <li>Type: {props.items.assetType}</li>
             <li>Quantity: {props.items.quantity}</li>
             </ul>
-          <form onSubmit={handleSell}>
-            <input name="quantity" type="text" placeholder="Quantity" ></input>
-            <input type="submit" value="Sell"></input>
+          <form className="horizontalContainer"onSubmit={handleSell}>
+            <input className="sellInput" name="quantity" type="text" placeholder="Quantity" ></input>
+            <input className="sellButton" type="submit" value="Sell"></input>
           </form>
             </div>
           )}
         </div>
-      </>
+      </div>
       );
 }
 
