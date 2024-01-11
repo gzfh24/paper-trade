@@ -96,7 +96,6 @@ function Portfolio() {
             console.log('Buy asset failed')
         }
     }
-
     return (
         <div className="portfolioContainer">
             <div className="container">
